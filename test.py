@@ -25,18 +25,21 @@ dilation 	= cv2.dilate(threshold,kernel,iterations = 1)
 dilation 	= cv2.dilate(threshold,kernel,iterations = 1)
 erosion 	= cv2.erode(threshold,kernel,iterations = 1)
 
-moments 	= cv2.moments(threshold)
+contours,h	= cv2.findContours(threshold, 1, 2)
 
-m01  	= moments['m01']
-m10  	= moments['m10']
-m00 	= moments['m00']
+cnt = contours[0]
+M 	= cv2.moments(cnt)
 
-x		= m10 / m00
-y		= m01 / m00
+cx = int(M['m10']/M['m00'])
+cy = int(M['m01']/M['m00'])
 
-print x
-print x
-print y
+print cx
+print cy
+
+for x in range(0, 400):
+	img.itemset((x,x,0),255)
+	img.itemset((x,x,1),255)
+	img.itemset((x,x,2),255)
 
 cv2.imshow("img",img)
 cv2.imshow("res",threshold)
